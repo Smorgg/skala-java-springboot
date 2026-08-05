@@ -1,17 +1,15 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Iterator;
 
+import java.util.List;
+import java.util.ArrayList;
 public class Calculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // String[] history = new String[100]; // 최대 100개의 계산 기록 저장
-        // int historyCount = 0; // 저장된 기록 개수
-        //----- 여기에 로직을 작성하세요. ----
-
-        // -- END --
+        //*** String[] history = new String[100]; // 최대 100개의 계산 기록 저장
+        //*** int historyCount = 0; // 저장된 기록 개수
+        List<String> history = new ArrayList<>(); // 최대 100개의 계산 기록 저장
 
         boolean isRun = true;
         while (isRun) {
@@ -27,47 +25,40 @@ public class Calculator {
             System.out.print("두 번째 숫자: ");
             int secondNumber = scanner.nextInt();
 
-            String record = ""; // 계산 기록 문자열
-
             // 0으로 나누기 예외 처리
             try {
                 if (operator.equals("/") && secondNumber == 0) {
                     throw new ArithmeticException("0으로 나눌 수 없습니다.");
                 }
             } catch (ArithmeticException e) {
-                System.out.println("예외 발생: " + e.getMessage());
+                System.out.println(e.getMessage());
                 e.printStackTrace();
-                continue; // 다시 계산 시작
+                continue;
             }
 
-            // switch expression으로 계산
-            double result = switch (operator) {
-                case "+" -> firstNumber + secondNumber;
-                case "-" -> firstNumber - secondNumber;
-                case "*" -> firstNumber * secondNumber;
-                case "/" -> (double) firstNumber / secondNumber;
+            // switch문으로 계산 (잘못된 연산자는 default에서 처리)
+            double result;
+            switch (operator) {
+                case "+" -> result = firstNumber + secondNumber;
+                case "-" -> result = firstNumber - secondNumber;
+                case "*" -> result = firstNumber * secondNumber;
+                case "/" -> result = (double) firstNumber / secondNumber;
                 default -> {
                     System.out.println("잘못된 연산자입니다.");
-                    yield Double.NaN;
+                    continue;
                 }
-            };
-
-            // 유효한 연산자일 경우 결과 출력
-            if (!Double.isNaN(result)) {
-                System.out.println("결과: " + result);
-                record = firstNumber + " " + operator + " " + secondNumber + " = " + result;
-            } else if (record.isEmpty()) {
-                record = firstNumber + " " + operator + " " + secondNumber + " = 오류(잘못된 연산자)";
             }
 
-            // 기록 저장
-            // if (historyCount < history.length) {
+            System.out.println("결과: " + result);
+            
+            String record = firstNumber + " " + operator + " " + secondNumber + " = " + result;
+            // if (historyCount <history.length) {
             //     history[historyCount] = record;
             //     historyCount++;
             // }
-            //----- 여기에 로직을 작성하세요. ----
+            history.add(record);
 
-            // -- END --
+        
 
             // 계속 여부 입력
             System.out.print("계속하려면 c(continue) / 종료하려면 q(quit) 입력: ");
@@ -85,10 +76,12 @@ public class Calculator {
         //     System.out.println(rec);
         // }
 
-        // Iterator로 기록 출력
-        //----- 여기에 로직을 작성하세요. ----
-
-        // -- END --
+        Iterator<String> iterator = history.iterator();
+        System.out.println("\n=== 계산 기록 ===");
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+        
 
         scanner.close();
     }

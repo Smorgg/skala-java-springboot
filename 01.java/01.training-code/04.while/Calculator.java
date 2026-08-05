@@ -6,12 +6,38 @@ public class Calculator {
 
         boolean isRun = true;
         while (isRun) { // 계속 반복
-            //----- 여기에 로직을 작성하세요. ----
+            // 첫 번째 숫자 입력
+            System.out.print("첫 번째 숫자: ");
+            int firstNumber = scanner.nextInt();
 
-            // -- END --
+            // 연산자 입력
+            System.out.print("연산자(+ - * /): ");
+            String operator = scanner.next().trim();
 
+            // 두 번째 숫자 입력
+            System.out.print("두 번째 숫자: ");
+            int secondNumber = scanner.nextInt();
 
+            // 0으로 나누기 예외 처리
+            if (operator.equals("/") && secondNumber == 0) {
+                System.out.println("0으로 나눌 수 없습니다.");
+                continue;
+            }
 
+            // switch문으로 계산 (잘못된 연산자는 default에서 처리)
+            double result;
+            switch (operator) {
+                case "+" -> result = firstNumber + secondNumber;
+                case "-" -> result = firstNumber - secondNumber;
+                case "*" -> result = firstNumber * secondNumber;
+                case "/" -> result = (double) firstNumber / secondNumber;
+                default -> {
+                    System.out.println("잘못된 연산자입니다.");
+                    continue;
+                }
+            }
+
+            System.out.println("결과: " + result);
 
             // 계속 여부 입력
             System.out.print("계속하려면 c(continue) / 종료하려면 q(quit) 입력: ");

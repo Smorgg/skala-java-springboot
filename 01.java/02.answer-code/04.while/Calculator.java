@@ -21,24 +21,23 @@ public class Calculator {
             // 0으로 나누기 예외 처리
             if (operator.equals("/") && secondNumber == 0) {
                 System.out.println("0으로 나눌 수 없습니다.");
-            } else {
-                // switch expression으로 계산
-                double result = switch (operator) {
-                    case "+" -> firstNumber + secondNumber;
-                    case "-" -> firstNumber - secondNumber;
-                    case "*" -> firstNumber * secondNumber;
-                    case "/" -> (double) firstNumber / secondNumber;
-                    default -> {
-                        System.out.println("잘못된 연산자입니다.");
-                        yield Double.NaN; // 잘못된 경우 NaN 반환
-                    }
-                };
+                continue;
+            }
 
-                // 유효한 연산자일 경우 결과 출력
-                if (!Double.isNaN(result)) {
-                    System.out.println("결과: " + result);
+            // switch문으로 계산 (잘못된 연산자는 default에서 처리)
+            double result;
+            switch (operator) {
+                case "+" -> result = firstNumber + secondNumber;
+                case "-" -> result = firstNumber - secondNumber;
+                case "*" -> result = firstNumber * secondNumber;
+                case "/" -> result = (double) firstNumber / secondNumber;
+                default -> {
+                    System.out.println("잘못된 연산자입니다.");
+                    continue;
                 }
             }
+
+            System.out.println("결과: " + result);
 
             // 계속 여부 입력
             System.out.print("계속하려면 c(continue) / 종료하려면 q(quit) 입력: ");

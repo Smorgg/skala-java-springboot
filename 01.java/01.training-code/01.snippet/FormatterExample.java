@@ -1,46 +1,14 @@
-import java.text.DecimalFormat;
-import java.util.Scanner;
-
 public class FormatterExample {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        String name = "스칼라";
+        int age = 30;
+        String formatted = String.format("이름: %s, 나이: %d", name, age);
+        System.out.println(formatted);  // 이름: 스칼라, 나이: 30
 
-        while (true) {
-            System.out.println("\n===== Formatter 선택 =====");
-            System.out.println("1) string-format");
-            System.out.println("2) message-format");
-            System.out.println("3) decimal-format");
-            System.out.println("4) exit");
-            System.out.print("선택: ");
+        double pi = 3.141592;
+        System.out.println(String.format("원주율: %.2f", pi));  // 원주율: 3.14
+        System.out.printf("|%10s|\n", "Java");  // 오른쪽 정렬 (총 10자리)
+        System.out.printf("|%-10s|\n", "Java"); // 왼쪽 정렬
 
-            String input = scanner.nextLine().trim();
-
-            switch (input) {
-                case "1":
-                    stringFormat();
-                    break;
-                case "2":
-                    messageFormat();
-                    break;
-                case "3":
-                    decimalFormat();
-                    break;
-                case "4":
-                    System.out.println("종료합니다.");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("잘못된 입력입니다. 1~4 중에서 선택하세요.");
-            }
-        }
     }
-
-
-    //----- 여기에 로직을 작성하세요. ----
-    private static void stringFormat() {}
-
-    private static void messageFormat() {}
-
-    private static void decimalFormat() {}
-
 }

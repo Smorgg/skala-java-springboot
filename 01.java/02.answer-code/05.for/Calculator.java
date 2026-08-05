@@ -21,36 +21,29 @@ public class Calculator {
             System.out.print("두 번째 숫자: ");
             int secondNumber = scanner.nextInt();
 
-            String record = ""; // 계산 기록 문자열
-
             // 0으로 나누기 예외 처리
             if (operator.equals("/") && secondNumber == 0) {
                 System.out.println("0으로 나눌 수 없습니다.");
-                record = firstNumber + " / " + secondNumber + " = 오류(0으로 나눔)";
-            } else {
-                // switch expression으로 계산
-                double result = switch (operator) {
-                    case "+" -> firstNumber + secondNumber;
-                    case "-" -> firstNumber - secondNumber;
-                    case "*" -> firstNumber * secondNumber;
-                    case "/" -> (double) firstNumber / secondNumber;
-                    default -> {
-                        System.out.println("잘못된 연산자입니다.");
-                        yield Double.NaN;
-                    }
-                };
+                continue;
+            }
 
-                // 유효한 연산자일 경우 결과 출력
-                if (!Double.isNaN(result)) {
-                    System.out.println("결과: " + result);
-                    record = firstNumber + " " + operator + " " + secondNumber + " = " + result;
-                } else if (record.isEmpty()) {
-                    record = firstNumber + " " + operator + " " + secondNumber + " = 오류(잘못된 연산자)";
+            // switch문으로 계산 (잘못된 연산자는 default에서 처리)
+            double result;
+            switch (operator) {
+                case "+" -> result = firstNumber + secondNumber;
+                case "-" -> result = firstNumber - secondNumber;
+                case "*" -> result = firstNumber * secondNumber;
+                case "/" -> result = (double) firstNumber / secondNumber;
+                default -> {
+                    System.out.println("잘못된 연산자입니다.");
+                    continue;
                 }
             }
 
-            // 기록 저장
-            if (historyCount < history.length) {
+            System.out.println("결과: " + result);
+            
+            String record = firstNumber + " " + operator + " " + secondNumber + " = " + result;
+            if (historyCount <history.length) {
                 history[historyCount] = record;
                 historyCount++;
             }
@@ -70,7 +63,11 @@ public class Calculator {
             if (rec == null) break; // 저장된 만큼만 출력
             System.out.println(rec);
         }
+        
 
+
+
+        
         scanner.close();
     }
 }

@@ -1,11 +1,18 @@
 import java.util.Scanner;
+import java.util.Iterator;
 
-public class Calculator {
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+public class CalculatorMap {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        String[] history = new String[100]; // 최대 100개의 계산 기록 저장
-        int historyCount = 0; // 저장된 기록 개수
+        //*** String[] history = new String[100]; // 최대 100개의 계산 기록 저장
+        //*** int historyCount = 0; // 저장된 기록 개수
+        // List<String> history = new ArrayList<>(); // 최대 100개의 계산 기록 저장
+        Map<Integer, String> historyMap = new HashMap<>(); // HashMap으로 계산 기록 저장
 
         boolean isRun = true;
         while (isRun) {
@@ -48,10 +55,13 @@ public class Calculator {
             System.out.println("결과: " + result);
             
             String record = firstNumber + " " + operator + " " + secondNumber + " = " + result;
-            if (historyCount <history.length) {
-                history[historyCount] = record;
-                historyCount++;
-            }
+            // if (historyCount <history.length) {
+            //     history[historyCount] = record;
+            //     historyCount++;
+            // }
+            historyMap.put(record.hashCode(), record);
+
+        
 
             // 계속 여부 입력
             System.out.print("계속하려면 c(continue) / 종료하려면 q(quit) 입력: ");
@@ -62,17 +72,23 @@ public class Calculator {
             }
         }
 
-        // for-each로 기록 출력
         System.out.println("\n=== 계산 기록 ===");
-        for (String rec : history) {
-            if (rec == null) break; // 저장된 만큼만 출력
-            System.out.println(rec);
+        // for-each로 기록 출력
+        // for (String rec : history) {
+        //     if (rec == null) break; // 저장된 만큼만 출력
+        //     System.out.println(rec);
+        // }
+
+        // Iterator<String> iterator = history.iterator();
+        // while (iterator.hasNext()) {
+        //     System.out.println(iterator.next());
+        // }
+
+        // Map의 entrySet()을 이용하여 기록 출력
+        for (Map.Entry<Integer, String> entry : historyMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-        
 
-
-
-        
         scanner.close();
     }
 }

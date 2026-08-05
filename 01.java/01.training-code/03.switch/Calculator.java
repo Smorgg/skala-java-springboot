@@ -22,10 +22,33 @@ public class Calculator {
             scanner.close();
             return;
         }
-    
-        //----- 여기에 로직을 작성하세요. ----
-
-        // -- END --
+        
+        // switch문을 사용하여 계산
+        double result;
+        switch (operator) {
+            case "+":
+                result = (double) firstNumber + secondNumber;
+                break;
+            case "-":
+                result = (double) firstNumber - secondNumber;
+                break;
+            case "*":
+                result = (double) firstNumber * secondNumber;
+                break;
+            case "/":
+                result = (double) firstNumber / secondNumber;
+                break;
+            default:
+                result = Double.NaN; // 잘못된 경우 NaN 반환
+                break;
+        }
+        
+        // 유효한 연산자일 경우 결과 출력
+        if (!Double.isNaN(result)) {
+            System.out.println("결과: " + result);
+        } else {
+            System.out.println("잘못된 연산자입니다.");
+        }
         
         scanner.close();
     }

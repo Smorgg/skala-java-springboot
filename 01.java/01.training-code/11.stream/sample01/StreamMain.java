@@ -33,9 +33,10 @@ public class StreamMain {
     
     }
 
-    // Java 8 이전
-    // Stream API를 사용하지 않고 필터링
-    public static void filterBeforeJava8() {
+
+    public static void main(String[] args) {
+        setProduct();
+        // Java 8 이전
         int count = 0;
         for(Product p : products) {
             if(p.isUsable()) {
@@ -44,24 +45,16 @@ public class StreamMain {
                 }
             }
         }
-        System.out.println("현재 판매 중이고 가격이 십만원 이하인 상품의 개수 : " + count + "개 "); 
-    }
-
-    // Java 8 이후
-    // ---- Stream API로 코드를 작성해보자 ----
-    public static void filterJava8() {
-
-    }
+        System.out.println("현재 판매 중이고 가격이 십만원 이하인 상품의 개수 : " + count + "개 ");
 
 
-    public static void main(String[] args) {
-        setProduct();
-
-        // Java 8 이전
-        //filterBeforeJava8();
 
         // Stream API 사용
-       filterJava8();
+        // long count2 = products.stream()
+        //         .filter(Product::isUsable)
+        //         .filter(p -> p.getPrice() <= 100000)
+        //         .count();
+        //System.out.println("현재 판매 중이고 가격이 십만원 이하인 상품의 개수 : " + count2 + "개 ");
     }
     
 }

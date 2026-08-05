@@ -23,14 +23,25 @@ public class Calculator {
             return;
         }
         
-        // switch expression을 사용하여 계산
-        double result = switch (operator) {
-            case "+" -> (double)firstNumber + secondNumber;
-            case "-" -> (double)firstNumber - secondNumber;
-            case "*" -> (double)firstNumber * secondNumber;
-            case "/" -> (double) firstNumber / secondNumber;
-            default -> Double.NaN; // 잘못된 경우 NaN 반환
-        };
+        // switch문을 사용하여 계산
+        double result;
+        switch (operator) {
+            case "+":
+                result = (double) firstNumber + secondNumber;
+                break;
+            case "-":
+                result = (double) firstNumber - secondNumber;
+                break;
+            case "*":
+                result = (double) firstNumber * secondNumber;
+                break;
+            case "/":
+                result = (double) firstNumber / secondNumber;
+                break;
+            default:
+                result = Double.NaN; // 잘못된 경우 NaN 반환
+                break;
+        }
         
         // 유효한 연산자일 경우 결과 출력
         if (!Double.isNaN(result)) {

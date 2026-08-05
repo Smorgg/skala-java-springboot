@@ -4,19 +4,29 @@ import java.util.List;
 public class BoundedGenericsExample {
 
     // -------------------------------------------------------
-    // ------ 여기에 sumBox () 메소드 코드를 작성하세요. ------
     // Upper Bound Wildcard 메서드: <? extends Number>
     //   Number 하위 타입 리스트의 합계를 반환 (BoundedBox에서 이동)
     // -------------------------------------------------------
-
+    public static double sumBox(List<? extends Number> list) {
+        double sum = 0;
+        for (Number n : list) {
+            sum += n.doubleValue();
+        }
+        // 컴파일 에러: upper bound wildcard 리스트에는 추가 불가
+        // list.add(10); 
+        return sum;
+    }
 
     // -------------------------------------------------------
-    // ------ 여기에 addBox () 메소드 코드를 작성하세요. ------
     // Lower Bound Wildcard 메서드: <? super Integer>
     //   Integer 및 그 상위 타입(Number, Object)만 허용
     //   → 값을 하나씩 받아서 리스트에 추가
     // -------------------------------------------------------
-
+    public static void addBox(List<? super Integer> list, int value) {
+        list.add(value);
+        // 컴파일 에러: lower bound wildcard는 Object로만 꺼낼 수 있음
+        // Integer first = list.get(0); 
+    }
 
     public static void main(String[] args) {
 
@@ -25,8 +35,6 @@ public class BoundedGenericsExample {
 
         BoundedBox<Double> doubleBox = new BoundedBox<>(3.14);
         System.out.println("Double  Box: " + doubleBox.getItem());
-
-        // BoundedBox<String> stringBox = new BoundedBox<>("hi"); // 컴파일 에러: String은 Number의 하위 타입이 아님
 
         // ---- Upper Bound Wildcard: sumBox(List<? extends Number>) ----
         List<Integer> intList = new ArrayList<>(List.of(1, 2, 3, 4, 5));
@@ -38,7 +46,6 @@ public class BoundedGenericsExample {
         // ---- Lower Bound Wildcard: addBox(List<? super Integer>, int) ----
         List<Number> numberList = new ArrayList<>();  // Number는 Integer의 상위 타입 → 허용
         List<Object> objectList = new ArrayList<>();  // Object는 Integer의 상위 타입 → 허용
-        // List<Double> doubleList2 = new ArrayList<>();  // 컴파일 에러: Double은 Integer의 상위 타입이 아님
 
         // addBox를 값 하나씩 여러 번 호출
         addBox(numberList, 10);
