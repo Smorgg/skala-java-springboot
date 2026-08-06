@@ -1,4 +1,4 @@
-public class StringBufferExample {
+public class StringBufferThreadSafe {
 
     // 멀티 스레드가 공유하는 StringBuffer (스레드 안전)
     private static StringBuffer sharedBuffer = new StringBuffer();
