@@ -1,3 +1,5 @@
+package sk.skala.com.httpserver.annotation;
+
 import java.lang.annotation.*;
 
 /**
