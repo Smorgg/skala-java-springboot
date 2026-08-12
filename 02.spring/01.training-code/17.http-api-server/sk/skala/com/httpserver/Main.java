@@ -19,7 +19,7 @@ public class Main {
         HttpWebServer server = new HttpWebServer(8080);
 
         // Spring의 @ComponentScan 역할 시뮬레이션 : 컨트롤러를 수동으로 등록
-        server.registerController(new UserController());
+        server.registerController(UserController.class);
 
         // Spring Boot의 내장 톰캣 역할: 서버 시작 시뮬레이션
         server.start();

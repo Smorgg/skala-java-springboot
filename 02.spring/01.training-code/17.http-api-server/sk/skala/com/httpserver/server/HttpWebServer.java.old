@@ -66,8 +66,8 @@ public class HttpWebServer {
      * 3) 선언된 모든 메서드를 리플렉션으로 훑으면서 @GetMapping/@PostMapping이 붙어 있는지 확인하고,
      * 4) 붙어 있으면 registerRoute()를 통해 "HTTP메서드 경로" 형태의 키로 라우팅 테이블에 저장한다
      ********************************************************************************/
-    public void registerController(Class<?> clazz) {
-        // Class<?> clazz = controller.getClass();
+    public void registerController(Object controller) {
+        Class<?> clazz = controller.getClass();
 
         // @Controller 어노테이션이 없으면 등록 거부
         if (!clazz.isAnnotationPresent(Controller.class)) {
@@ -75,13 +75,6 @@ public class HttpWebServer {
         }
 
         System.out.println("[컨트롤러 등록] " + clazz.getSimpleName());
-
-        Object controller;
-        try {
-            controller = clazz.getDeclaredConstructor().newInstance();  // 컨트롤러 인스턴스 생성
-        } catch (Exception e) {
-            throw new RuntimeException("컨트롤러 인스턴스 생성 실패: " + clazz.getName(), e);
-        }
 
         // 클래스의 모든 메서드를 순회하며 어노테이션 확인
         for (Method method : clazz.getDeclaredMethods()) {
