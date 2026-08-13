@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sk.skala.myapp.aspect.Metrics;
 import com.sk.skala.myapp.domain.User;
 import com.sk.skala.myapp.service.UserService;
 
@@ -33,6 +34,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @Metrics
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable long id) {
         return userService.getUserById(id);
