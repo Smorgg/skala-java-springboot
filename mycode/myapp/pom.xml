@@ -70,6 +70,11 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional> <!-- 컴파일 시에만 필요 -->
 		</dependency>
+		<!-- Spring Boot Starter AOP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aspectj</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.sk.skala.myapp.domain.User;
 import com.sk.skala.myapp.repository.UserRepository;
 
-@Service
+// @Service
 public class UserService {
     private final UserRepository userRepository;
     
