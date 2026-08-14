@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sk.skala.myapp.domain.Product;
 import com.sk.skala.myapp.domain.ProductStatus;
+import com.sk.skala.myapp.domain.User;
 import com.sk.skala.myapp.dto.ProductRequest;
 import com.sk.skala.myapp.dto.ProductResponse;
 import com.sk.skala.myapp.service.ProductService;
+import com.sk.skala.myapp.service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -27,20 +29,24 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductController {
 
     private final ProductService productService;
+    private final UserService userService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, UserService userService) {
         this.productService = productService;
+        this.userService = userService;
     }
 
     // ── 변환 헬퍼 ────────────────────────────────────────────
 
     private Product toEntity(ProductRequest request) {
         Product product = new Product();
+        User user = userService.getUserById(request.getUserId());
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setStockQuantity(request.getStockQuantity());
         product.setStatus(request.getStatus());
         product.setDescription(request.getDescription());
+        product.setUser(user);
         return product;
     }
 
