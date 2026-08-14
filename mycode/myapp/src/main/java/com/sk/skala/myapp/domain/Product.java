@@ -13,6 +13,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,6 +63,9 @@ public class Product {
 
     @Transient
     private String displayLabel;                      // "상품명 (상태)" 형태의 표시용 라벨, DB에 저장 안 됨
+
+    @Version
+    private Long version;                             // 낙관적 락: 충돌 감지용 버전 번호
 
     /**
      * DB에서 조회한 뒤 displayLabel을 조합해 반환하는 편의 메서드

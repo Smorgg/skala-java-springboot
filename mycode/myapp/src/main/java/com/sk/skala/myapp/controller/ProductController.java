@@ -46,7 +46,6 @@ public class ProductController {
         product.setStockQuantity(request.getStockQuantity());
         product.setStatus(request.getStatus());
         product.setDescription(request.getDescription());
-        product.setUser(user);
         return product;
     }
 
@@ -93,7 +92,7 @@ public class ProductController {
     // POST /api/products — 상품 등록
     @PostMapping
     public ProductResponse createProduct(@Valid @RequestBody ProductRequest request) {
-        Product saved = productService.createProduct(toEntity(request));
+        Product saved = productService.createProduct(toEntity(request), request.getUserId());
         log.info("상품 등록: {}", saved.getDisplayLabel());
         return toResponse(saved);
     }
