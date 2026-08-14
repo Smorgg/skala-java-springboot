@@ -54,4 +54,14 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    // userId 기반으로 상품 목록 검색
+    public List<Product> getProductsBYUserId(Long userId) {
+        return productRepository.findByUserId(userId);
+    }
+
+    // 사용자 이름으로 상품 목록 조회
+    public List<Product> getProductsByUserName(String userName) {
+        return productRepository.findByUserName(userName);
+    }
 }

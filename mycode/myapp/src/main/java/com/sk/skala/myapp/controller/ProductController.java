@@ -52,8 +52,10 @@ public class ProductController {
                 product.getStockQuantity(),
                 product.getStatus(),
                 product.getDescription(),
-                product.getDisplayLabel()   // @Transient 필드 — 런타임 계산값
-        );
+                product.getDisplayLabel(), // @Transient 필드 — 런타임 계산값
+                product.getUser().getId(),  // 상품 등록 사용자 ID
+                product.getUser().getName() // 상품 등록 사용자 이름
+            );
     }
 
     // ── CRUD 엔드포인트 ───────────────────────────────────────
@@ -93,7 +95,7 @@ public class ProductController {
     // PUT /api/products/{id} — 상품 수정
     @PutMapping("/{id}")
     public ProductResponse updateProduct(@PathVariable Long id,
-                                         @Valid @RequestBody ProductRequest request) {
+            @Valid @RequestBody ProductRequest request) {
         return productService.updateProduct(id, toEntity(request))
                 .map(this::toResponse)
                 .orElse(null);
@@ -103,5 +105,21 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
+    }
+
+    // GET /api/products/user?userId=123 - userId 기반 상품 목록 조회
+    @GetMapping(value = "/user", params = "userId")
+    public List<ProductResponse> getProductsByUserId(@RequestParam Long userId) {
+        return productService.getProductsBYUserId(userId).stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    // GET /api/products/user?name=홍길동 - 사용자 이름으로 상품 목록 조회
+    @GetMapping(value = "/user", params = "name")
+    public List<ProductResponse> getProductsByUserName(@RequestParam String name) {
+        return productService.getProductsByUserName(name).stream()
+                .map(this::toResponse)
+                .toList();
     }
 }

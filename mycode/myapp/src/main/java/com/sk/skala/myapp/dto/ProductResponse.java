@@ -18,4 +18,6 @@ public class ProductResponse {
     private ProductStatus status;
     private String description;
     private String displayLabel;  // @Transient 필드 — 런타임 계산값 노출
+    private Long userId;          // 등록한 사용자 ID
+    private String userName;      // 등록한 사용자 이름
 }

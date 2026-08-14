@@ -35,4 +35,7 @@ public class ProductRequest {
 
     @Transient
     private String displayLabel;
+
+    private Long userId;
+    private String userName;
 }
