@@ -6,8 +6,8 @@ spring:
 
 logging:
   level:
-    '[com.sk.skala.myapp.controller]': DEBUG
-    '[com.sk.skala.myapp.service]': DEBUG
+    "[com.sk.skala.myapp.controller]": DEBUG
+    "[com.sk.skala.myapp.service]": DEBUG
 
 springdoc:
   api-docs:
@@ -21,3 +21,47 @@ springdoc:
     display-request-duration: true
     try-it-out-enabled: true
   show-actuator: false
+
+management:
+  server:
+    port: 8080 # Actuator 포트 설정
+  endpoints:
+    web:
+      exposure:
+        include: "*" # Prometheus endpoint 노출
+  endpoint:
+    health:
+      probes:
+        enabled: true # LivenessState, ReadinessState 활성화
+  health:
+    livenessState:
+      enabled: true # LivenessState 활성화
+    readinessState:
+      enabled: true # ReadinessState 활성화
+  metrics:
+    enable:
+      all: true # 모든 기본 메트릭 활성화
+
+spec:
+  containers:
+    - name: my-spring-app
+      image: my-registry.com/my-spring-app:latest
+      ports:
+        - containerPort: 8080
+      livenessProbe:
+        httpGet:
+          path: /actuator/health/liveness
+          port: 8081
+        initialDelaySeconds: 5 # 컨테이너 시작 후 5초 뒤 체크 시작
+        periodSeconds: 10 # 10초마다 체크
+        timeoutSeconds: 3 # 응답 없으면 3초 후 실패 간주
+        failureThreshold: 3 # 3번 연속 실패 시 컨테이너 재시작
+
+      readinessProbe:
+        httpGet:
+          path: /actuator/health/readiness
+          port: 8081
+        initialDelaySeconds: 5 # 컨테이너 시작 후 5초 뒤 체크 시작
+        periodSeconds: 10 # 10초마다 체크
+        timeoutSeconds: 3 # 응답 없으면 3초 후 실패 간주
+        failureThreshold: 3 # 3번 연속 실패 시 트래픽에서 제외
